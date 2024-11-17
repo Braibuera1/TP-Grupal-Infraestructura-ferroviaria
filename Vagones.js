@@ -1,3 +1,26 @@
+
+//Funcion para realizar la prueba del tren 
+function verDetallesPrueba(mitren){
+    console.log("Detalles de mi tren");
+    console.log("Pasajeros permitidos: ", mitren.pasajerosPermitidos());
+    console.log("Vagones populares: ", mitren.vagonesPopulares());
+    console.log("Es Carguero: ", mitren.formaciónCarguera()? "SI":"NO");
+    console.log("Dispersion de pesos: ", mitren.dispersiónDePesos());
+    console.log("Baños: ", mitren.cantidadBaños());
+
+}
+
+// Funcion para realizar la prueba de los vagones
+function PruebaVagones(vagones){
+    for (let i=0; i<vagones.length;i++){
+        console.log("Vagon numero",i+1)
+        console.log("Cantidad de pasajeros: ", vagones[i].pasajerosPermitidos());
+        console.log("Peso maximo: ", vagones[i].pesoMaxVagon());
+        console.log("carga maxima: ", vagones[i].getCargaMax());
+        console.log("Tiene baño: ", vagones[i].getTieneBaños() ? "SI":"NO")
+    }
+}
+
 /*
 Creamos la clase VagonPasajeros 
 */
@@ -32,6 +55,10 @@ class VagonPasajeros {
     pesoMaxVagon() {
         return 2000 + (this.pasajerosPermitidos() * 80) + this.getCargaMax();
     }
+    
+    hacerMantenimiento(){ if(!this.estaOrdenado){
+        this.estaOrdenado = !this.estaOrdenado}
+    }
 }
 
 class VagonDeCarga {
@@ -56,6 +83,10 @@ class VagonDeCarga {
     pesoMaxVagon() {
         return 1500 + this.getCargaMax()
     }
+
+    hacerMantenimiento(){
+        this.madSuelta = Math.max(0,this.madSuelta-2);
+    }
 }
 
 
@@ -77,6 +108,8 @@ class VagonDormitorio {
     pesoMaxVagon() {
         return 4000 + (80 * this.pasajerosPermitidos()) + this.getCargaMax();
     }
+
+    hacerMantenimiento(){}
 }
 
 
@@ -89,6 +122,10 @@ class Tren {
     }
     agregarVagones(...vagon) {
         this.vagones.push(...vagon)
+    }
+
+    getVagones(){
+        return this.vagones;
     }
 
     pasajerosPermitidos() {
@@ -112,57 +149,44 @@ class Tren {
         return this.vagones.filter((x) => x.getTieneBaños() ).length;
     }
 
+    hacerMantenimiento(){
+        this.vagones.forEach(x=>x.hacerMantenimiento());
+    }
+
 }
 
+//Prueba a realizar 
 
-
+//Tren 1
 let vagon1 = new VagonPasajeros(10, 4, true, true);
 let vagon2 = new VagonPasajeros(7, 2, false, false);
 let vagon3 = new VagonDeCarga(6800, 5);
 let vagon4 = new VagonDormitorio(8, 3);
-
+let vagon5 = new VagonDeCarga(8000, 1);
+let vagon6 = new VagonDormitorio(15, 4);
 
 let tren1 = new Tren();
 tren1.agregarVagones(vagon1, vagon2, vagon3, vagon4);
-console.log(tren1.cantidadBaños());
 
+//Prueba de los vagones del tren 1 
+PruebaVagones(tren1.getVagones());
 
+// Prueba de Tren 1
+console.log("ANTES DEL MANTENIMIENTO");
+verDetallesPrueba(tren1);
+tren1.hacerMantenimiento();
+console.log("DESPUES DEL MANTENIMIENTO");
+verDetallesPrueba(tren1);
 
-//pruebas 
-/*
-function probarCantPax() {
-    console.log('Cantidad pasajeros');
-    for (let i in tren1.vagones) {
-        console.log(tren1.vagones[i].pasajerosPermitidos());
-    }
-}
+//Creacion del tren 2
+let tren2=new Tren();
+tren2.agregarVagones(vagon5, vagon6)
 
-function probarPesoMaxPax() {
-    console.log('Pasajeros Peso Max')
-    for (let i in tren1.vagones) {
-        console.log(tren1.vagones[i].pesoMaxVagon());
-    }
-}
+// Prueba de Tren 2
 
+console.log("ANTES DEL MANTENIMIENTO");
+verDetallesPrueba(tren2);
+tren2.hacerMantenimiento();
+console.log("DESPUES DEL MANTENIMIENTO");
+verDetallesPrueba(tren2);
 
-function probarCargaMax() {
-    console.log('Carga Maxima')
-
-    for (let i in tren1.vagones)
-        console.log(tren1.vagones[i].getCargaMax());
-}
-
-
-function verBaños() {
-    console.log('Tiene Baños')
-    for (let i in tren1.vagones)
-        console.log(tren1.vagones[i].getTieneBaños())
-}
-
-
-probarCantPax()
-probarPesoMaxPax()
-probarCargaMax()
-verBaños()
-
-*/
