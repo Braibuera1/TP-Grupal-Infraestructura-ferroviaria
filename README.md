@@ -3,7 +3,7 @@
 **Comisión:** C1  
 
 **Integrantes:**  
-- Brian Buera  
+- Buera Brian  
 - López Paula Denise  
-- Ángel Gonzalo Vega Fernández  
-- Agustín Aravena  
+- Vega Fernández Ángel Gonzalo   
+- Aravena Agustín   
