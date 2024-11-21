@@ -3,9 +3,9 @@
 function verDetallesPrueba(mitren){
     console.log("\nPasajeros permitidos: ", mitren.pasajerosPermitidos());
     console.log("Vagones populares: ", mitren.vagonesPopulares());
-    console.log("Es Carguero: ", mitren.formaciónCarguera()? "SI":"NO");
-    console.log("Dispersion de pesos: ", mitren.dispersiónDePesos());
-    console.log("Baños: ", mitren.cantidadBaños());
+    console.log("Es Carguero: ", mitren.formacionCarguera()? "SI":"NO");
+    console.log("Dispersion de pesos: ", mitren.dispersionDePesos());
+    console.log("Baños: ", mitren.cantidadBanios());
 
 }
 
@@ -16,7 +16,7 @@ function PruebaVagones(vagones){
         console.log("Cantidad de pasajeros: ", vagones[i].pasajerosPermitidos());
         console.log("Peso maximo: ", vagones[i].pesoMaxVagon());
         console.log("carga maxima: ", vagones[i].getCargaMax());
-        console.log("Tiene baño: ", vagones[i].getTieneBaños() ? "SI":"NO")
+        console.log("Tiene baño: ", vagones[i].getTieneBanios() ? "SI":"NO")
     }
 }
 
@@ -29,14 +29,14 @@ class VagonPasajeros {
     //Inicializamos los atributos de la clase
     largo = 4
     ancho = 10
-    tieneBaños = false
+    tieneBanios = false
     estaOrdenado = true
 
     //Constructor 
-    constructor(largo, ancho, tieneBaños, estaOrdenado) {
+    constructor(largo, ancho, tieneBanios, estaOrdenado) {
         this.largo = largo;
         this.ancho = ancho;
-        this.tieneBaños = tieneBaños;
+        this.tieneBanios = tieneBanios;
         this.estaOrdenado = estaOrdenado;
     }
 
@@ -45,11 +45,11 @@ class VagonPasajeros {
         const calPasajeros = this.ancho <= 3 ? 8 * this.largo : 10 * this.largo;
         return this.estaOrdenado ? calPasajeros : calPasajeros - 15;
     }
-    getTieneBaños() {
-        return this.tieneBaños;
+    getTieneBanios() {
+        return this.tieneBanios;
     }
     getCargaMax() {
-        if (this.getTieneBaños()) { return 300 } else { return 800 }
+        if (this.getTieneBanios()) { return 300 } else { return 800 }
     }
     pesoMaxVagon() {
         return 2000 + (this.pasajerosPermitidos() * 80) + this.getCargaMax();
@@ -73,7 +73,7 @@ class VagonDeCarga {
     }
 
     //metodos
-    getTieneBaños() {
+    getTieneBanios() {
         return false;
     }
     pasajerosPermitidos() {
@@ -103,7 +103,7 @@ class VagonDormitorio {
         this.camasXCompart = camasXCompart;
     }
 
-    getTieneBaños() {
+    getTieneBanios() {
         return true;
     }
     pasajerosPermitidos() {
@@ -144,16 +144,16 @@ class Tren {
         return this.vagones.filter((x) => x.pasajerosPermitidos() > 50).length;
     }
 
-    formaciónCarguera() {
+    formacionCarguera() {
         return this.vagones.every(vagon => vagon.getCargaMax() >= 1000);
     }
-    dispersiónDePesos() {
+    dispersionDePesos() {
         let max = this.vagones.reduce((max, valor) => max.pesoMaxVagon() > valor.pesoMaxVagon()? max:valor);
         let min = this.vagones.reduce((min, valor) => min.pesoMaxVagon() < valor.pesoMaxVagon()? min:valor);
 
         return max.pesoMaxVagon() - min.pesoMaxVagon()
     }
-    cantidadBaños(){
+    cantidadBanios(){
         return this.vagones.filter((x) => x.getTieneBaños() ).length;
     }
 
