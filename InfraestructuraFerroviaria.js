@@ -1,8 +1,7 @@
 
 //Funcion para realizar la prueba del tren 
 function verDetallesPrueba(mitren){
-    console.log("Detalles de mi tren");
-    console.log("Pasajeros permitidos: ", mitren.pasajerosPermitidos());
+    console.log("\nPasajeros permitidos: ", mitren.pasajerosPermitidos());
     console.log("Vagones populares: ", mitren.vagonesPopulares());
     console.log("Es Carguero: ", mitren.formaciónCarguera()? "SI":"NO");
     console.log("Dispersion de pesos: ", mitren.dispersiónDePesos());
@@ -13,7 +12,7 @@ function verDetallesPrueba(mitren){
 // Funcion para realizar la prueba de los vagones
 function PruebaVagones(vagones){
     for (let i=0; i<vagones.length;i++){
-        console.log("Vagon numero",i+1)
+        console.log("\nVagon numero",i+1)
         console.log("Cantidad de pasajeros: ", vagones[i].pasajerosPermitidos());
         console.log("Peso maximo: ", vagones[i].pesoMaxVagon());
         console.log("carga maxima: ", vagones[i].getCargaMax());
@@ -61,6 +60,10 @@ class VagonPasajeros {
     }
 }
 
+/*
+Creamos la clase VagonDeCarga 
+*/
+
 class VagonDeCarga {
 
     //constructor
@@ -89,6 +92,9 @@ class VagonDeCarga {
     }
 }
 
+/*
+Creamos la clase VagonDormitorio 
+*/
 
 class VagonDormitorio {
 
@@ -112,8 +118,10 @@ class VagonDormitorio {
     hacerMantenimiento(){}
 }
 
+/*
+Creamos la clase Tren 
+*/
 
-//Clase de tren 
 class Tren {
 
     //constructor
@@ -155,9 +163,9 @@ class Tren {
 
 }
 
-//Prueba a realizar 
+//------------Prueba a realizar --------------------------------
 
-//Tren 1
+//Creacion de instancias de vagones
 let vagon1 = new VagonPasajeros(10, 4, true, true);
 let vagon2 = new VagonPasajeros(7, 2, false, false);
 let vagon3 = new VagonDeCarga(6800, 5);
@@ -165,28 +173,32 @@ let vagon4 = new VagonDormitorio(8, 3);
 let vagon5 = new VagonDeCarga(8000, 1);
 let vagon6 = new VagonDormitorio(15, 4);
 
+
+//Creacion de la instancia del primer tren
 let tren1 = new Tren();
-tren1.agregarVagones(vagon1, vagon2, vagon3, vagon4);
+tren1.agregarVagones(vagon1, vagon2, vagon3, vagon4); //agrego los vagones al tren 1
+
+//Creacion de la instancia del segundo tren
+let tren2=new Tren();
+tren2.agregarVagones(vagon5, vagon6) //agrego los vagones al tren 2
 
 //Prueba de los vagones del tren 1 
-PruebaVagones(tren1.getVagones());
+console.log("01 - Prueba de vagones del primer tren");
+PruebaVagones(tren1.getVagones()); 
 
-// Prueba de Tren 1
-console.log("ANTES DEL MANTENIMIENTO");
+// Prueba de Tren 1 - Antes y Despues
+console.log("\n02 - Prueba del primer tren - Antes y Despues");
+console.log("\nAntes del mantenimiento");
 verDetallesPrueba(tren1);
-tren1.hacerMantenimiento();
-console.log("DESPUES DEL MANTENIMIENTO");
+tren1.hacerMantenimiento(); // le realizo mantenimiento al tren
+console.log("\nDespues del mantenimiento");
 verDetallesPrueba(tren1);
-
-//Creacion del tren 2
-let tren2=new Tren();
-tren2.agregarVagones(vagon5, vagon6)
 
 // Prueba de Tren 2
-
-console.log("ANTES DEL MANTENIMIENTO");
+console.log("\n03 - Prueba del segundo tren - Antes y Despues");
+console.log("\nAntes del mantenimiento");
 verDetallesPrueba(tren2);
-tren2.hacerMantenimiento();
-console.log("DESPUES DEL MANTENIMIENTO");
+tren2.hacerMantenimiento(); // le realizo mantenimiento al tren
+console.log("\nDespues del mantenimiento");
 verDetallesPrueba(tren2);
 
